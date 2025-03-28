@@ -1,0 +1,19 @@
+GET http://localhost:8080/api/owners/1/animal-names
+
+###
+GET http://localhost:8080/api/owners/with-both-cat-and-dog
+
+###
+GET http://localhost:8080/api/cats/all
+
+###
+GET http://localhost:8080/api/cats/bySound
+
+###
+GET http://localhost:8080/animals/all
+
+###
+GET http://localhost:8080/animals/2
+
+###
+GET http://localhost:8080/animals/byName/Oliver
