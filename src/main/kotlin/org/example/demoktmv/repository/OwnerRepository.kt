@@ -1,13 +1,14 @@
 package org.example.demoktmv.repository
 
 import org.example.demoktmv.model.Owner
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
+import org.springframework.data.r2dbc.repository.Query
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
+import reactor.core.publisher.Flux
 
 @Repository
-interface OwnerRepository : JpaRepository<Owner, Long> {
+interface OwnerRepository : CoroutineCrudRepository<Owner, Long> {
     
     /**
      * Find all animal names belonging to an owner with the given ID
@@ -16,7 +17,7 @@ interface OwnerRepository : JpaRepository<Owner, Long> {
      * @return a list of animal names
      */
     @Query("SELECT a.name FROM Animal a WHERE a.owner.id = :ownerId")
-    fun findAnimalNamesByOwnerId(@Param("ownerId") ownerId: Long): List<String>
+    suspend fun findAnimalNamesByOwnerId(@Param("ownerId") ownerId: Long): Flux<String>
     
     /**
      * Find all animal names belonging to an owner with the given first name and last name
@@ -26,10 +27,10 @@ interface OwnerRepository : JpaRepository<Owner, Long> {
      * @return a list of animal names
      */
     @Query("SELECT a.name FROM Animal a WHERE a.owner.firstName = :firstName AND a.owner.lastName = :lastName")
-    fun findAnimalNamesByOwnerName(
+    suspend fun findAnimalNamesByOwnerName(
         @Param("firstName") firstName: String, 
         @Param("lastName") lastName: String
-    ): List<String>
+    ): Flux<String>
     
     /**
      * Find all owners who have both cats and dogs
@@ -47,7 +48,7 @@ interface OwnerRepository : JpaRepository<Owner, Long> {
             WHERE a.owner = o AND a.class = org.example.demoktmv.model.Dog
         )
     """)
-    fun findOwnersWithBothCatAndDog(): List<Owner>
+    suspend fun findOwnersWithBothCatAndDog(): Flux<Owner?>
     
 
 }

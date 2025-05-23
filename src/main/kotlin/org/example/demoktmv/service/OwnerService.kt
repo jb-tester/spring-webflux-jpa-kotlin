@@ -3,6 +3,8 @@ package org.example.demoktmv.service
 import org.example.demoktmv.model.Owner
 import org.example.demoktmv.repository.OwnerRepository
 import org.springframework.stereotype.Service
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
 @Service
 class OwnerService(private val ownerRepository: OwnerRepository) {
@@ -13,7 +15,7 @@ class OwnerService(private val ownerRepository: OwnerRepository) {
      * @param ownerId the ID of the owner
      * @return a list of animal names
      */
-    fun getAnimalNamesByOwnerId(ownerId: Long): List<String> {
+    suspend fun getAnimalNamesByOwnerId(ownerId: Long): Flux<String> {
         return ownerRepository.findAnimalNamesByOwnerId(ownerId)
     }
     
@@ -24,7 +26,7 @@ class OwnerService(private val ownerRepository: OwnerRepository) {
      * @param lastName the last name of the owner
      * @return a list of animal names
      */
-    fun getAnimalNamesByOwnerName(firstName: String, lastName: String): List<String> {
+    suspend fun getAnimalNamesByOwnerName(firstName: String, lastName: String): Flux<String> {
         return ownerRepository.findAnimalNamesByOwnerName(firstName, lastName)
     }
     
@@ -34,8 +36,8 @@ class OwnerService(private val ownerRepository: OwnerRepository) {
      * @param id the ID of the owner
      * @return the owner or null if not found
      */
-    fun getOwnerById(id: Long): Owner? {
-        return ownerRepository.findById(id).orElse(null)
+    suspend fun getOwnerById(id: Long): Mono<Owner?> {
+        return Mono.justOrEmpty(ownerRepository.findById(id))
     }
     
     /**
@@ -43,15 +45,10 @@ class OwnerService(private val ownerRepository: OwnerRepository) {
      * 
      * @return a list of owners who have both cats and dogs
      */
-    fun findOwnersWithBothCatAndDog(): List<Owner> {
+    suspend fun findOwnersWithBothCatAndDog(): Flux<Owner?> {
         val owners = ownerRepository.findOwnersWithBothCatAndDog()
         return owners
     }
     
-    /**
-     * Alternative implementation
-     */
-    fun findOwnersWithBothCatAndDogInMemory(): List<Owner> {
-        return ownerRepository.findAll().filter { it.hasBothCatAndDog() }
-    }
+
 }

@@ -64,7 +64,7 @@ class OwnerHandler(private val ownerService: OwnerService) {
      * Get names of owners who have both cats and dogs
      */
     suspend fun getOwnerNamesWithBothCatAndDog(request: ServerRequest): ServerResponse {
-        val ownerNames = ownerService.findOwnersWithBothCatAndDog().map { it.getFullName() }
+        val ownerNames = ownerService.findOwnersWithBothCatAndDog().map { it?.getFullName() }
         return ServerResponse.ok()
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValueAndAwait(ownerNames)
