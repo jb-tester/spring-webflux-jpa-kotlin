@@ -7,7 +7,7 @@ import jakarta.persistence.*
 class Owner(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    val id: Long? = null,
     
     val firstName: String,
     

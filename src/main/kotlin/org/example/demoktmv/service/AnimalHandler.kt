@@ -1,6 +1,5 @@
 package org.example.demoktmv.service
 
-import org.example.demoktmv.repository.AnimalRepository
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
