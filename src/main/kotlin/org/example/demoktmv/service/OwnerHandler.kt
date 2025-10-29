@@ -10,9 +10,7 @@ import org.springframework.web.reactive.function.server.buildAndAwait
 @Component
 class OwnerHandler(private val ownerService: OwnerService) {
 
-    /**
-     * Get animal names by owner ID
-     */
+
     suspend fun getAnimalNamesByOwnerId(request: ServerRequest): ServerResponse {
         val id = request.pathVariable("id").toLong()
         val animalNames = ownerService.getAnimalNamesByOwnerId(id)
@@ -21,9 +19,7 @@ class OwnerHandler(private val ownerService: OwnerService) {
             .bodyValueAndAwait(animalNames)
     }
 
-    /**
-     * Get animal names by owner's first name and last name
-     */
+
     suspend fun getAnimalNamesByOwnerName(request: ServerRequest): ServerResponse {
         val firstName = request.queryParam("firstName").orElse("")
         val lastName = request.queryParam("lastName").orElse("")
@@ -34,9 +30,7 @@ class OwnerHandler(private val ownerService: OwnerService) {
             .bodyValueAndAwait(animalNames)
     }
 
-    /**
-     * Get owner by ID
-     */
+
     suspend fun getOwnerById(request: ServerRequest): ServerResponse {
         val id = request.pathVariable("id").toLong()
         val owner = ownerService.getOwnerById(id)
@@ -50,9 +44,7 @@ class OwnerHandler(private val ownerService: OwnerService) {
         }
     }
 
-    /**
-     * Get all owners who have both cats and dogs
-     */
+
     suspend fun getOwnersWithBothCatAndDog(request: ServerRequest): ServerResponse {
         val owners = ownerService.findOwnersWithBothCatAndDog()
         return ServerResponse.ok()
@@ -60,9 +52,7 @@ class OwnerHandler(private val ownerService: OwnerService) {
             .bodyValueAndAwait(owners)
     }
 
-    /**
-     * Get names of owners who have both cats and dogs
-     */
+
     suspend fun getOwnerNamesWithBothCatAndDog(request: ServerRequest): ServerResponse {
         val ownerNames = ownerService.findOwnersWithBothCatAndDog().map { it.getFullName() }
         return ServerResponse.ok()

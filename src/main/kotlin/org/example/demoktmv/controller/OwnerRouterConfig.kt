@@ -18,19 +18,14 @@ class OwnerRouterConfig(private val ownerHandler: OwnerHandler) {
     fun ownerRoutes(): RouterFunction<ServerResponse> = coRouter {
         "/api/owners".nest {
             accept(MediaType.APPLICATION_JSON).nest {
-                // Get animal names by owner ID
                 GET("/{id}/animal-names", ownerHandler::getAnimalNamesByOwnerId)
 
-                // Get animal names by owner name
                 GET("/animal-names", ownerHandler::getAnimalNamesByOwnerName)
 
-                // Get owner by ID
                 GET("/by{id}", ownerHandler::getOwnerById)
 
-                // Get owners with both cat and dog
                 GET("/with-both-cat-and-dog", ownerHandler::getOwnersWithBothCatAndDog)
 
-                // Get names of owners who have both cat and dog
                 GET("/with-both-cat-and-dog/names", ownerHandler::getOwnerNamesWithBothCatAndDog)
             }
         }

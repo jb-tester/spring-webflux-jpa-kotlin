@@ -10,9 +10,7 @@ import java.util.Optional
 @Service
 class CatService(private val catRepository: CatRepository) {
     
-    /**
-     * Find all cats
-     */
+
     fun findAll(): List<Cat> {
         return catRepository.findAll()
     }

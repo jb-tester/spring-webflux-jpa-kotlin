@@ -13,9 +13,7 @@ import org.springframework.web.reactive.function.server.json
 @Component
 class CatHandler(private val catService: CatService, private val ownerService: OwnerService) {
 
-    /**
-     * Find all cats
-     */
+
     suspend fun findAll(request: ServerRequest): ServerResponse {
         val cats = catService.findAll()
         return ServerResponse.ok()

@@ -18,23 +18,17 @@ class Owner(
             mappedBy = "owner", cascade = [CascadeType.ALL], orphanRemoval = true)
     val animals: MutableList<Animal> = mutableListOf()
 ) {
-    // Helper method to add an animal to the owner
     fun addAnimal(animal: Animal) {
         animals.add(animal)
         animal.owner = this
     }
     
-    // Helper method to remove an animal from the owner
     fun removeAnimal(animal: Animal) {
         animals.remove(animal)
         animal.owner = null
     }
     
-    /**
-     * Check if this owner has both cat and dog
-     * 
-     * @return true if the owner has at least one cat and at least one dog, false otherwise
-     */
+
     fun hasBothCatAndDog(): Boolean {
         var hasCat = false
         var hasDog = false
@@ -53,11 +47,7 @@ class Owner(
         return false
     }
     
-    /**
-     * Get full name of the owner
-     * 
-     * @return the full name (first name + last name)
-     */
+
     fun getFullName(): String {
         return "$firstName $lastName"
     }
